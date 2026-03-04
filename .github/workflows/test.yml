@@ -1,0 +1,19 @@
+name: Build and Test
+on: 
+  push:
+    branches:
+      - '*'
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 
+      uses: actions/setup-node@v3
+    - name: Install dependencies
+      run: npm install
+    - name: Testing build process (ex. ts)
+      run: npm run build
+    - name: Unit Testings
+      run: npm run test
