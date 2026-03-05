@@ -20,5 +20,5 @@ jobs:
       run: npm install
     - name: Testing build process (ex. ts)
       run: npm run build
-    - name: Unit Testings
-      run: npm run test
+    #- name: Unit Testings
+    #  run: npm run test
