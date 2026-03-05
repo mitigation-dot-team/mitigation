@@ -24,6 +24,12 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Get Internal token
+        run: |
+          echo "registry=https://registry.npmjs.org/" > .npmrc
+          echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}" >> .npmrc
+
       - name: Install dependencies
         run: npm ci
         working-directory: ${{ github.workspace }}
