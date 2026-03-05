@@ -42,3 +42,4 @@ jobs:
           llm-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
           risk-threshold: "7"
           enable-llm: "true"
+          mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
