@@ -37,7 +37,8 @@ jobs:
       - name: Run MergeShield Analysis
         uses: ./
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          github-token: ${{ secrets.REPO_TOKEN }}
+          llm-provider: "claude"
+          llm-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
           risk-threshold: "7"
           enable-llm: "true"
