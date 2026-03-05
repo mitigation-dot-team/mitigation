@@ -11,6 +11,11 @@ jobs:
     - uses: actions/checkout@v3
     - name: Use Node.js 
       uses: actions/setup-node@v3
+    - name: Get Internal token
+      run: |
+        echo "registry=https://registry.npmjs.org/" > .npmrc
+        echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}" >> .npmrc
     - name: Install dependencies
       run: npm install
     - name: Testing build process (ex. ts)
