@@ -31,7 +31,7 @@ Calcula un **score de riesgo (0–10)** para cada Pull Request usando heurístic
 | Webhook | ✗ | ✓ |
 | Reporte interno | ✗ | ✓ |
 
-Obtén tu API key en [https://mergeshield.dev](https://mergeshield.dev).
+Get your API key at [https://mitigation.team](https://mitigation.team).
 
 ## 🚀 Quick Start
 
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +61,7 @@ jobs:
 ### Uso completo (heurística + LLM)
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
 ### Con webhook y múltiples proveedores (Premium)
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -115,7 +115,7 @@ jobs:
 ### Usar outputs en steps posteriores
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         id: mergeshield
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}

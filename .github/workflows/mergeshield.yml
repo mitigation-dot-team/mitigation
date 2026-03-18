@@ -22,13 +22,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Get Internal token
         run: |
           echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=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" >> .npmrc
 
       - name: Install dependencies
         run: npm ci
@@ -38,6 +38,7 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          llm-provider: "claude"
+          llm-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
           risk-threshold: "7"
           enable-llm: "true"
