@@ -4,20 +4,17 @@
 
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { validateApiKey, enforcePlanRestrictions, runAnalysis, PRData, SupportedLanguage  } from "@mitigation-dot-team/core";
+import { validateApiKey, enforcePlanRestrictions, runAnalysis } from "@mitigation-dot-team/core";
 
 const COMMENT_MARKER = "<!-- mergeshield-analysis -->";
 
-async function run(): Promise<void> {
+async function run() {
   try {
     // ── 1. Inputs ──────────────────────────────────────────────────────────
     const mergeShieldApiKey = core.getInput("mergeshield-api-key", { required: true });
     const token = core.getInput("github-token", { required: true });
     const llmApiKey = core.getInput("llm-api-key");
-    const llmProvider = (core.getInput("llm-provider") || "openai").toLowerCase() as
-      | "openai"
-      | "claude"
-      | "azure";
+    const llmProvider = (core.getInput("llm-provider") || "openai").toLowerCase();
     const llmModel = core.getInput("llm-model");
     const enableLLM = core.getInput("enable-llm") === "true" && !!llmApiKey;
     const riskThreshold = parseInt(core.getInput("risk-threshold") || "7", 10);
@@ -25,7 +22,7 @@ async function run(): Promise<void> {
     const webhookSecret = core.getInput("webhook-secret");
     const internalReporterUrl = core.getInput("internal-reporter-url");
     const internalReporterSecret = core.getInput("internal-reporter-secret");
-    const commentLanguage = (core.getInput("comment-language") || "en") as SupportedLanguage;
+    const commentLanguage = core.getInput("comment-language") || "en";
 
     const octokit = github.getOctokit(token);
     const context = github.context;
@@ -70,7 +67,7 @@ async function run(): Promise<void> {
       mediaType: { format: "diff" },
     });
 
-    const prData: PRData = {
+    const prData = {
       additions: pr.additions,
       deletions: pr.deletions,
       changedFiles: pr.changed_files,
@@ -154,7 +151,7 @@ async function run(): Promise<void> {
       );
     }
   } catch (error) {
-    core.setFailed(`Mitigation Team error: ${(error as Error).message}`);
+    core.setFailed(`Mitigation Team error: ${error.message}`);
   }
 }
 
