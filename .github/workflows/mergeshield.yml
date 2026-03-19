@@ -31,7 +31,7 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=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" >> .npmrc
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --silent
         working-directory: ${{ github.workspace }}
 
       - name: Run MergeShield Analysis
