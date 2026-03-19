@@ -2,6 +2,7 @@
   "name": "@mitigation-dot-team/action",
   "version": "1.1.0",
   "description": "GitHub Action that calculates PR risk score (0-10) using heuristics + LLM analysis",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build index.js -o dist",
