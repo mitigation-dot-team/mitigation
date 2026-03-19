@@ -1,76 +1,67 @@
 name: "MergeShield - PR Risk Analysis"
-description: "Calcula un score de riesgo (0-10) para cada PR usando heurísticas + LLM. Visibilidad de riesgo para CTOs."
+description: "Calculates a risk score (0-10) for each PR using heuristics + LLM. Risk visibility for CTOs."
 author: "MergeShield"
-
 branding:
   icon: "shield"
   color: "blue"
-
 inputs:
   mergeshield-api-key:
-    description: "MergeShield API key for plan validation and account association. Get yours at https://mergeshield.dev"
+    description: "MergeShield API key for plan validation and account association. Get yours at https://mitigation.team"
     required: true
   github-token:
-    description: "GitHub token para acceder a la API (pull requests, comments)"
+    description: "GitHub token to access the API (pull requests, comments)"
     required: true
   llm-provider:
-    description: "Proveedor de LLM: openai, claude, azure (default: openai)"
+    description: "LLM provider: openai, claude, azure (default: openai)"
     required: false
     default: "openai"
   llm-api-key:
-    description: "API key del proveedor LLM seleccionado (opcional)"
+    description: "API key for the selected LLM provider (optional)"
     required: false
     default: ""
   llm-model:
-    description: "Modelo a usar. Default: gpt-4o-mini (OpenAI), claude-3-5-sonnet-20241022 (Claude), gpt-4o-mini (Azure)"
+    description: "Model to use. Default: gpt-4o-mini (OpenAI), claude-3-5-sonnet-20241022 (Claude), gpt-4o-mini (Azure)"
     required: false
     default: ""
   enable-llm:
-    description: "Activar análisis LLM contextual (requiere llm-api-key)"
+    description: "Enable contextual LLM analysis (requires llm-api-key)"
     required: false
     default: "false"
   risk-threshold:
-    description: "Score mínimo para fallar el check (0-10). Default: 7"
+    description: "Minimum score to fail the check (0-10). Default: 7"
     required: false
     default: "7"
   webhook-url:
-    description: "URL webhook para enviar resultados del análisis (opcional)"
+    description: "Webhook URL to send analysis results to (optional)"
     required: false
     default: ""
   webhook-secret:
-    description: "Secret HMAC para firmar el payload del webhook (opcional pero recomendado)"
+    description: "HMAC secret to sign the webhook payload (optional but recommended)"
     required: false
     default: ""
   internal-reporter-url:
-    description: "URL del sistema interno de MergeShield para reportar análisis (opcional)"
+    description: "MergeShield internal system URL to report analysis results (optional)"
     required: false
     default: ""
   internal-reporter-secret:
-    description: "Secret HMAC para autenticar con el sistema interno (opcional pero recomendado)"
+    description: "HMAC secret to authenticate with the internal system (optional but recommended)"
     required: false
     default: ""
   comment-language:
     description: "Language for the PR comment: en (English) or es (Spanish). Default: en"
     required: false
     default: "en"
-  # Retrocompatibilidad: openai-api-key reemplazado por llm-api-key
-  openai-api-key:
-    description: "DEPRECATED: Usar llm-api-key en su lugar"
-    required: false
-    default: ""
-
 outputs:
   risk-score:
-    description: "Score de riesgo final (0-10)"
+    description: "Final risk score (0-10)"
   risk-level:
-    description: "Nivel de riesgo: low, medium, high"
+    description: "Risk level: low, medium, high"
   heuristic-score:
-    description: "Score del análisis heurístico (0-10)"
+    description: "Heuristic analysis score (0-10)"
   llm-score:
-    description: "Score del análisis LLM (0-10), vacío si LLM está desactivado"
+    description: "LLM analysis score (0-10), empty if LLM is disabled"
   llm-justification:
-    description: "Justificación del LLM"
-
+    description: "LLM justification"
 runs:
-  using: "node20"
-  main: "dist/index.js"
+  using: "node24"
+  main: "index.js"

@@ -1,12 +1,13 @@
 {
   "name": "@mitigation-dot-team/action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "GitHub Action that calculates PR risk score (0-10) using heuristics + LLM analysis",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "tsx --test src/__tests__/heuristics.test.ts",
-    "lint": "eslint src/ index.ts"
+    "build": "ncc build index.js -o dist",
+    "test": "node --test __tests__/*.test.js",
+    "lint": "eslint index.js"
   },
   "keywords": [
     "github-action",
@@ -15,7 +16,7 @@
     "code-review",
     "mergeshield"
   ],
-  "author": "MergeShield",
+  "author": "Daniel Naranjo <daniel@mitigation.team>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.1",
@@ -23,9 +24,7 @@
     "@mitigation-dot-team/core": "^1.0.2"
   },
   "devDependencies": {
-    "@types/node": "^25.3.1",
-    "eslint": "^8.56.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "@vercel/ncc": "^0.38.3",
+    "eslint": "^8.56.0"
   }
 }

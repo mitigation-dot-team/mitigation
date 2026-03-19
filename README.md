@@ -1,41 +1,41 @@
 # 🛡️ MergeShield — PR Risk Analysis GitHub Action
 
-Calcula un **score de riesgo (0–10)** para cada Pull Request usando heurísticas objetivas + análisis contextual con LLM. No es un code reviewer — es **visibilidad de riesgo para CTOs y tech leads**.
+Calculates a **risk score (0–10)** for each Pull Request using objective heuristics + contextual LLM analysis. It's not a code reviewer — it's **risk visibility for CTOs and tech leads**.
 
 ## ✨ Features
 
-- **API key requerida** — validación de plan antes de cualquier análisis
-- **Análisis heurístico** automático: tamaño del PR, archivos críticos, migraciones, seguridad, infra
-- **Análisis LLM contextual** (opcional): impacto funcional, side-effects, contratos API
+- **API key required** — plan validation before any analysis
+- **Automatic heuristic analysis**: PR size, critical files, migrations, security, infra
+- **Contextual LLM analysis** (optional): functional impact, side-effects, API contracts
 - **Multi-provider LLM**: OpenAI, Claude (Anthropic), Azure OpenAI
-- **Comentario automático** en el PR con score + justificación + recomendaciones (upsert inteligente)
-- **Check configurable**: falla el CI si el riesgo supera un threshold
-- **Webhook de notificación** para integrar con sistemas externos (plan Premium)
-- **Reporte interno** hacia el dashboard de MergeShield (plan Premium)
+- **Automatic PR comment** with score + justification + recommendations (smart upsert)
+- **Configurable check**: fails CI if risk exceeds a threshold
+- **Notification webhook** to integrate with external systems (Premium plan)
+- **Internal reporting** to the MergeShield dashboard (Premium plan)
 
 ## 📊 Risk Score
 
-| Score | Nivel | Significado |
-|-------|-------|-------------|
-| 0–4 | 🟢 Low | Cambios de bajo riesgo, merge seguro |
-| 5–8 | 🟡 Medium | Requiere revisión cuidadosa |
-| 9–10 | 🔴 High | Alto riesgo — revisión exhaustiva requerida |
+| Score | Level | Meaning |
+|-------|-------|---------|
+| 0–4 | 🟢 Low | Low-risk changes, safe to merge |
+| 5–8 | 🟡 Medium | Requires careful review |
+| 9–10 | 🔴 High | High risk — exhaustive review required |
 
-## 🔑 Planes
+## 🔑 Plans
 
-| Funcionalidad | Starter | Premium |
-|---------------|---------|---------|
-| Repositorios | 1 | 5 |
-| Proveedor LLM | OpenAI | OpenAI, Claude, Azure |
-| Modelos custom | ✗ | ✓ |
+| Feature | Starter | Premium |
+|---------|---------|---------|
+| Repositories | 1 | 5 |
+| LLM Provider | OpenAI | OpenAI, Claude, Azure |
+| Custom models | ✗ | ✓ |
 | Webhook | ✗ | ✓ |
-| Reporte interno | ✗ | ✓ |
+| Internal reporting | ✗ | ✓ |
 
-Obtén tu API key en [https://mergeshield.dev](https://mergeshield.dev).
+Get your API key at [https://mitigation.team](https://mitigation.team).
 
 ## 🚀 Quick Start
 
-### Uso básico (solo heurística)
+### Basic usage (heuristics only)
 
 ```yaml
 name: MergeShield
@@ -52,16 +52,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Uso completo (heurística + LLM)
+### Full usage (heuristics + LLM)
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -71,10 +71,10 @@ jobs:
           risk-threshold: "7"
 ```
 
-### Con webhook y múltiples proveedores (Premium)
+### With webhook and multiple providers (Premium)
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -87,35 +87,35 @@ jobs:
 
 ## ⚙️ Inputs
 
-| Input | Requerido | Default | Descripción |
-|-------|-----------|---------|-------------|
-| `mergeshield-api-key` | ✅ | — | API key de MergeShield para validación de plan |
-| `github-token` | ✅ | — | Token de GitHub para acceder a la API |
-| `llm-provider` | ❌ | `"openai"` | Proveedor LLM: `openai`, `claude`, `azure` |
-| `llm-api-key` | ❌ | `""` | API key del proveedor LLM seleccionado |
-| `llm-model` | ❌ | `""` | Modelo a usar (default según proveedor) |
-| `enable-llm` | ❌ | `"false"` | Activar análisis contextual con LLM |
-| `risk-threshold` | ❌ | `"7"` | Score mínimo para fallar el check (0–10) |
-| `webhook-url` | ❌ | `""` | URL para enviar resultados del análisis (Premium) |
-| `webhook-secret` | ❌ | `""` | Secret HMAC para firmar el payload del webhook |
-| `internal-reporter-url` | ❌ | `""` | URL del sistema interno de MergeShield (Premium) |
-| `internal-reporter-secret` | ❌ | `""` | Secret HMAC para autenticar con el sistema interno |
-| `openai-api-key` | ❌ | `""` | **DEPRECATED** — usar `llm-api-key` en su lugar |
+| Input | Required | Default | Description |
+|-------|----------|---------|-------------|
+| `mergeshield-api-key` | ✅ | — | MergeShield API key for plan validation |
+| `github-token` | ✅ | — | GitHub token to access the API |
+| `llm-provider` | ❌ | `"openai"` | LLM provider: `openai`, `claude`, `azure` |
+| `llm-api-key` | ❌ | `""` | API key for the selected LLM provider |
+| `llm-model` | ❌ | `""` | Model to use (defaults to provider default) |
+| `enable-llm` | ❌ | `"false"` | Enable contextual LLM analysis |
+| `risk-threshold` | ❌ | `"7"` | Minimum score to fail the check (0–10) |
+| `webhook-url` | ❌ | `""` | URL to send analysis results to (Premium) |
+| `webhook-secret` | ❌ | `""` | HMAC secret to sign the webhook payload |
+| `internal-reporter-url` | ❌ | `""` | MergeShield internal system URL (Premium) |
+| `internal-reporter-secret` | ❌ | `""` | HMAC secret to authenticate with the internal system |
+| `openai-api-key` | ❌ | `""` | **DEPRECATED** — use `llm-api-key` instead |
 
 ## 📤 Outputs
 
-| Output | Descripción |
+| Output | Description |
 |--------|-------------|
-| `risk-score` | Score de riesgo final (0–10) |
-| `risk-level` | Nivel: `low`, `medium`, `high` |
-| `heuristic-score` | Score del análisis heurístico (0–10) |
-| `llm-score` | Score del análisis LLM (vacío si LLM está desactivado) |
-| `llm-justification` | Justificación del LLM |
+| `risk-score` | Final risk score (0–10) |
+| `risk-level` | Level: `low`, `medium`, `high` |
+| `heuristic-score` | Heuristic analysis score (0–10) |
+| `llm-score` | LLM analysis score (empty if LLM is disabled) |
+| `llm-justification` | LLM justification |
 
-### Usar outputs en steps posteriores
+### Using outputs in subsequent steps
 
 ```yaml
-      - uses: tu-org/mergeshield-action@v1
+      - uses: mitigation-dot-team/mitigation@v1
         id: mergeshield
         with:
           mergeshield-api-key: ${{ secrets.MERGESHIELD_API_KEY }}
@@ -127,93 +127,85 @@ jobs:
           echo "Level: ${{ steps.mergeshield.outputs.risk-level }}"
 ```
 
-## 🔍 Reglas Heurísticas
+## 🔍 Heuristic Rules
 
-| Regla | Max Score | Qué detecta |
-|-------|-----------|--------------|
-| `pr_size` | +3 | PRs grandes (>200, >500, >1000 líneas) |
-| `file_count` | +2 | Muchos archivos modificados (>15, >30) |
-| `migrations` | +2 | Archivos de migración o schema de DB |
-| `infrastructure` | +2 | Cambios en Terraform, Docker, CI/CD |
-| `security` | +2 | Archivos de auth, tokens, secrets, `.env` |
+| Rule | Max Score | What it detects |
+|------|-----------|-----------------|
+| `pr_size` | +3 | Large PRs (>200, >500, >1000 lines) |
+| `file_count` | +2 | Many modified files (>15, >30) |
+| `migrations` | +2 | DB migration or schema files |
+| `infrastructure` | +2 | Changes to Terraform, Docker, CI/CD |
+| `security` | +2 | Auth, token, secret, `.env` files |
 | `api_contracts` | +2 | OpenAPI, protobuf, GraphQL schemas |
-| `deletion_ratio` | +1 | Alto ratio de eliminación (>70%) |
+| `deletion_ratio` | +1 | High deletion ratio (>70%) |
 | `config_files` | +1 | `package.json`, `tsconfig`, `webpack`, etc. |
-| `missing_description` | +1 | PR sin descripción o muy corta |
+| `missing_description` | +1 | PR with no or very short description |
 
-El score heurístico es la suma de reglas, **cappado en 10**.
+The heuristic score is the sum of all rules, **capped at 10**.
 
-## 🤖 Análisis LLM
+## 🤖 LLM Analysis
 
-Cuando `enable-llm: "true"`, el LLM evalúa:
+When `enable-llm: "true"`, the LLM evaluates:
 
-1. **Impacto funcional** — ¿Qué funcionalidades se afectan?
-2. **Side-effects** — ¿Puede romper algo no evidente?
-3. **Seguridad** — ¿Exposición de datos o vulnerabilidades?
-4. **Contratos API** — ¿Se rompe compatibilidad?
-5. **Performance** — ¿N+1 queries, memory leaks?
-6. **Reversibilidad** — ¿Se puede hacer rollback fácil?
+1. **Functional impact** — What features are affected?
+2. **Side-effects** — Could it break something non-obvious?
+3. **Security** — Data exposure or vulnerabilities?
+4. **API contracts** — Is backwards compatibility broken?
+5. **Performance** — N+1 queries, memory leaks?
+6. **Reversibility** — Can it be easily rolled back?
 
-**Fórmula del score final:** `Math.round((heuristic * 0.4 + llm * 0.6) * 10) / 10`
+**Final score formula:** `Math.round((heuristic * 0.4 + llm * 0.6) * 10) / 10`
 
-Si LLM está desactivado o falla, se usa únicamente el score heurístico.
+If LLM is disabled or fails, only the heuristic score is used.
 
-### Proveedores soportados
+### Supported providers
 
-| Proveedor | `llm-provider` | Modelo por defecto | Plan |
-|-----------|---------------|-------------------|------|
+| Provider | `llm-provider` | Default model | Plan |
+|----------|---------------|---------------|------|
 | OpenAI | `openai` | `gpt-4o-mini` | Starter + Premium |
 | Anthropic | `claude` | `claude-3-5-sonnet-20241022` | Premium |
 | Azure OpenAI | `azure` | `gpt-4o-mini` | Premium |
 
-Consulta [LLM_PROVIDERS.md](LLM_PROVIDERS.md) para configuración detallada.
+See [LLM_PROVIDERS.md](LLM_PROVIDERS.md) for detailed configuration.
 
 ## 🔔 Webhooks
 
-Cuando se configura `webhook-url`, MergeShield envía un payload firmado con HMAC-SHA256 en el header `X-MergeShield-Signature`. Consulta [WEBHOOK.md](WEBHOOK.md) para el formato del payload y ejemplos de validación.
+When `webhook-url` is configured, MergeShield sends a payload signed with HMAC-SHA256 in the `X-MergeShield-Signature` header. See [WEBHOOK.md](WEBHOOK.md) for the payload format and validation examples.
 
-## 🏗️ Estructura del proyecto
+## 🏗️ Project Structure
 
 ```
-├── action.yml                     # Definición del GitHub Action
-├── index.ts                       # Entrypoint — orquestador principal
+├── action.yml                     # GitHub Action definition
+├── index.js                       # Entrypoint — main orchestrator
 ├── dist/
-│   └── index.js                   # Compilado (generado por npm run build)
-├── src/
-│   ├── heuristics.ts              # Motor de reglas heurísticas
-│   ├── llm-analyzer.ts            # Integración multi-provider LLM
-│   ├── plan-validator.ts          # Validación de API key y plan tiers
-│   ├── formatter.ts               # Generador de comentario Markdown
-│   ├── webhook-notifier.ts        # Notificador webhook con HMAC
-│   ├── internal-reporter.ts       # Reporte al sistema interno
-│   └── types.ts                   # Tipos TypeScript centrales
+│   └── index.js                   # Bundle (generated by npm run build)
 ├── package.json
 └── README.md
 ```
 
-## 🛠️ Desarrollo
+## 🛠️ Development
 
 ```bash
-npm run build   # TypeScript → dist/index.js (requerido antes de cada commit)
-npm run test    # Tests con Node test runner
-npm run lint    # ESLint en src/ e index.ts
+npm run build   # Bundle index.js → dist/index.js (required before each commit)
+npm run test    # Tests with Node test runner
+npm run lint    # ESLint on index.js
 ```
 
-## 📝 Ejemplo de comentario generado
+## 📝 Example generated comment
 
 > ## 🟡 MergeShield — Risk Score: 6.2/10 (MEDIUM RISK)
 >
-> ### 📊 Estadísticas del PR
-> | Métrica | Valor |
-> |---------|-------|
-> | Líneas añadidas | +523 |
-> | Líneas eliminadas | -89 |
-> | Archivos modificados | 12 |
+> ### 📊 PR Statistics
+> | Metric | Value |
+> |--------|-------|
+> | Lines added | +523 |
+> | Lines removed | -89 |
+> | Files modified | 12 |
 >
-> ### 🔍 Análisis Heurístico
-> • PR grande: 612 líneas cambiadas (>500)
-> • Archivos de migración/DB detectados: `db/migrations/003_add_users.sql`
-> • Archivos de configuración modificados: `package.json`
+> ### 🔍 Heuristic Analysis
+> • Large PR: 612 lines changed (>500)
+> • DB migration files detected: `db/migrations/003_add_users.sql`
+> • Configuration files modified: `package.json`
 
 ## 📄 License
 
