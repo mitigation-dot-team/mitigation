@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_TOKEN }}" >> .npmrc
 
       - name: Install dependencies
         run: npm install --silent
