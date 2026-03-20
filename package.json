@@ -3,10 +3,8 @@
   "version": "1.1.1",
   "description": "GitHub Action that calculates PR risk score (0-10) using heuristics + LLM analysis",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js -o dist",
-    "test": "node --test __tests__/*.test.js",
     "lint": "eslint index.js"
   },
   "keywords": [
@@ -24,7 +22,9 @@
     "@mitigation-dot-team/core": "^1.0.5"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.38.3",
     "eslint": "^8.56.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
