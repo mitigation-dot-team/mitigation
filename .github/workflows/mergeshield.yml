@@ -31,7 +31,7 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_TOKEN }}" >> .npmrc
 
       - name: Install dependencies
-        run: npm install --silent
+        run: npm install
         working-directory: ${{ github.workspace }}
 
       - name: Run MergeShield Analysis
