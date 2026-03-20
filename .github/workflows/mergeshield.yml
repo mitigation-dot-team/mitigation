@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${MITIGATIONDOTTEAM }" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${MITIGATIONDOTTEAM}" >> .npmrc
       - name: Install dependencies
         run: npm install
         working-directory: ${{ github.workspace }}
