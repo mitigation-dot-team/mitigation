@@ -27,7 +27,7 @@ jobs:
 
       - name: Get Internal token
         env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
