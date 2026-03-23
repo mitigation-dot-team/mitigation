@@ -27,6 +27,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set @mitigation-dot-team:registry=https://npm.pkg.github.com/
           npm config set //npm.pkg.github.com/:_authToken=${{secrets.MITIGATIONDOTTEAM}}
           npm install
         working-directory: ${{ github.workspace }}
