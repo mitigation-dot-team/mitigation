@@ -25,18 +25,10 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Get Internal token
-        run: |
-          echo "registry=https://registry.npmjs.org/" > .npmrc
-          echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${MITIGATIONDOTTEAM}" >> .npmrc
-          echo "package-lock=false" >> .npmrc
-          echo "always-auth=true" >> .npmrc
-        env:
-          MITIGATIONDOTTEAM: ${{ secrets.MITIGATIONDOTTEAM }}
-
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm config set //npm.pkg.github.com/:_authToken=${secrets.MITIGATIONDOTTEAM}
+          npm install
         working-directory: ${{ github.workspace }}
 
       - name: Run MergeShield Analysis
