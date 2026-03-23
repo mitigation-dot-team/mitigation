@@ -7,6 +7,7 @@ on:
 permissions:
   pull-requests: write
   contents: read
+  packages: read
 
 jobs:
   risk-analysis:
@@ -24,14 +25,12 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Get Internal token
-        run: |
-          echo "registry=https://registry.npmjs.org/" > .npmrc
-          echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.MITIGATIONDOTTEAM }}" >> .npmrc
-
       - name: Install dependencies
-        run: npm install --silent
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set @mitigation-dot-team:registry=https://npm.pkg.github.com/
+          npm config set //npm.pkg.github.com/:_authToken=${{secrets.MITIGATIONDOTTEAM}}
+          npm install
         working-directory: ${{ github.workspace }}
 
       - name: Run MergeShield Analysis
