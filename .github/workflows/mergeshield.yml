@@ -27,11 +27,11 @@ jobs:
 
       - name: Get Internal token
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.MITIGATIONDOTTEAM }}
+          MITIGATIONDOTTEAM: ${{ secrets.MITIGATIONDOTTEAM }}
         run: |
           echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "@mitigation-dot-team:registry=https://npm.pkg.github.com/" >> .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${MITIGATIONDOTTEAM}" >> .npmrc
       - name: Install dependencies
         run: npm install
         working-directory: ${{ github.workspace }}
