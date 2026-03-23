@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm config set //npm.pkg.github.com/:_authToken=${secrets.MITIGATIONDOTTEAM}
+          npm config set //npm.pkg.github.com/:_authToken=${{secrets.MITIGATIONDOTTEAM}}
           npm install
         working-directory: ${{ github.workspace }}
 
