@@ -12,9 +12,9 @@ inputs:
     description: "GitHub token to access the API (pull requests, comments)"
     required: true
   llm-provider:
-    description: "LLM provider: openai, claude, azure (default: openai)"
+    description: "LLM provider: openai, claude, azure (default: claude)"
     required: false
-    default: "openai"
+    default: "claude"
   llm-api-key:
     description: "API key for the selected LLM provider (optional)"
     required: false
