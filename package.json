@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js -o dist --license licenses.txt",
     "lint": "eslint index.js"
   },
   "keywords": [
@@ -22,6 +23,7 @@
     "@mitigation-dot-team/core": "^1.0.2"
   },
   "devDependencies": {
+    "@vercel/ncc": "^0.38.3",
     "eslint": "^8.56.0"
   },
   "engines": {
