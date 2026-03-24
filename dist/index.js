@@ -33049,7 +33049,7 @@ async function run() {
     const mergeShieldApiKey = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("mergeshield-api-key", { required: true });
     const token = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("github-token", { required: true });
     const llmApiKey = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("llm-api-key");
-    const llmProvider = (_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("llm-provider") || "openai").toLowerCase();
+    const llmProvider = (_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("llm-provider") || "claude").toLowerCase();
     const llmModel = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("llm-model");
     const enableLLM = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("enable-llm") === "true" && !!llmApiKey;
     const riskThreshold = parseInt(_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("risk-threshold") || "7", 10);

@@ -14,7 +14,7 @@ async function run() {
     const mergeShieldApiKey = core.getInput("mergeshield-api-key", { required: true });
     const token = core.getInput("github-token", { required: true });
     const llmApiKey = core.getInput("llm-api-key");
-    const llmProvider = (core.getInput("llm-provider") || "openai").toLowerCase();
+    const llmProvider = (core.getInput("llm-provider") || "claude").toLowerCase();
     const llmModel = core.getInput("llm-model");
     const enableLLM = core.getInput("enable-llm") === "true" && !!llmApiKey;
     const riskThreshold = parseInt(core.getInput("risk-threshold") || "7", 10);
