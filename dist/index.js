@@ -4036,6 +4036,58 @@ function analyzePRWithClaude(_a) {
     });
 }
 /**
+ * Analiza el PR usando Google Gemini API.
+ */
+function analyzePRWithGemini(_a) {
+    return __awaiter(this, arguments, void 0, function (_b) {
+        var userPrompt, model, url, response, errorBody, data, content;
+        var _c, _d, _e, _f;
+        var apiKey = _b.apiKey, title = _b.title, body = _b.body, filenames = _b.filenames, additions = _b.additions, deletions = _b.deletions, diff = _b.diff, _g = _b.model, modelParam = _g === void 0 ? "gemini-1.5-flash" : _g;
+        return __generator(this, function (_h) {
+            switch (_h.label) {
+                case 0:
+                    userPrompt = buildUserPrompt({ title: title, body: body, filenames: filenames, additions: additions, deletions: deletions, diff: diff });
+                    model = modelParam;
+                    url = "https://generativelanguage.googleapis.com/v1beta/models/".concat(model, ":generateContent?key=").concat(apiKey);
+                    return [4 /*yield*/, fetch(url, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                contents: [
+                                    {
+                                        parts: [
+                                            { text: "".concat(exports.SYSTEM_PROMPT, "\n\n").concat(userPrompt) },
+                                        ],
+                                    },
+                                ],
+                                generationConfig: {
+                                    temperature: 0.3,
+                                    maxOutputTokens: 1000,
+                                },
+                            }),
+                        })];
+                case 1:
+                    response = _h.sent();
+                    if (!!response.ok) return [3 /*break*/, 3];
+                    return [4 /*yield*/, response.text()];
+                case 2:
+                    errorBody = _h.sent();
+                    throw new Error("Gemini API error (".concat(response.status, "): ").concat(errorBody));
+                case 3: return [4 /*yield*/, response.json()];
+                case 4:
+                    data = (_h.sent());
+                    content = (_f = (_e = (_d = (_c = data.candidates) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.content) === null || _e === void 0 ? void 0 : _e.parts) === null || _f === void 0 ? void 0 : _f[0]?.text;
+                    if (!content) {
+                        throw new Error("Gemini API returned empty response");
+                    }
+                    return [2 /*return*/, parseLLMResponse(content, "gemini")];
+            }
+        });
+    });
+}
+/**
  * Analiza el PR usando Azure OpenAI API.
  */
 function analyzePRWithAzure(_a) {
@@ -4120,6 +4172,8 @@ function analyzePRWithLLM(params) {
                     return [2 /*return*/, analyzePRWithClaude(params)];
                 case "azure":
                     return [2 /*return*/, analyzePRWithAzure(params)];
+                case "gemini":
+                    return [2 /*return*/, analyzePRWithGemini(params)];
                 case "openai":
                 default:
                     return [2 /*return*/, analyzePRWithOpenAI(params)];
@@ -4262,7 +4316,7 @@ function enforcePlanRestrictions(config, context) {
         if (config.plan === "starter") {
             throw new Error("LLM provider \"".concat(context.llmProvider, "\" is not available on the Starter plan.\n") +
                 "Starter plan supports: OpenAI only.\n" +
-                "Upgrade to Premium for Claude, Azure OpenAI, and more: https://mitigation.team/upgrade");
+                "Upgrade to Premium for Claude, Azure OpenAI, Google Gemini, and more: https://mitigation.team/upgrade");
         }
         throw new Error("LLM provider \"".concat(context.llmProvider, "\" is not allowed on your current plan."));
     }
