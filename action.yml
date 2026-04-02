@@ -12,7 +12,7 @@ inputs:
     description: "GitHub token to access the API (pull requests, comments)"
     required: true
   llm-provider:
-    description: "LLM provider: openai, claude, azure (default: claude)"
+    description: "LLM provider: openai (Starter+Premium), claude, azure, gemini (Premium only). Default: claude"
     required: false
     default: "claude"
   llm-api-key:
@@ -20,7 +20,7 @@ inputs:
     required: false
     default: ""
   llm-model:
-    description: "Model to use. Default: gpt-4o-mini (OpenAI), claude-3-5-sonnet-20241022 (Claude), gpt-4o-mini (Azure)"
+    description: "Model to use. Default: gpt-4o-mini (OpenAI), claude-3-5-sonnet-20241022 (Claude), gpt-4o-mini (Azure), gemini-1.5-flash (Gemini)"
     required: false
     default: ""
   enable-llm:

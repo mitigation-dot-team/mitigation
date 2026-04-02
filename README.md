@@ -7,7 +7,7 @@ Calculates a **risk score (0–10)** for each Pull Request using objective heuri
 - **API key required** — plan validation before any analysis
 - **Automatic heuristic analysis**: PR size, critical files, migrations, security, infra
 - **Contextual LLM analysis** (optional): functional impact, side-effects, API contracts
-- **Multi-provider LLM**: OpenAI, Claude (Anthropic), Azure OpenAI
+- **Multi-provider LLM**: OpenAI, Claude (Anthropic), Azure OpenAI, Google Gemini
 - **Automatic PR comment** with score + justification + recommendations (smart upsert)
 - **Configurable check**: fails CI if risk exceeds a threshold
 - **Notification webhook** to integrate with external systems (Premium plan)
@@ -26,7 +26,7 @@ Calculates a **risk score (0–10)** for each Pull Request using objective heuri
 | Feature | Starter | Premium |
 |---------|---------|---------|
 | Repositories | 1 | 5 |
-| LLM Provider | OpenAI | OpenAI, Claude, Azure |
+| LLM Provider | OpenAI | OpenAI, Claude, Azure, Gemini |
 | Custom models | ✗ | ✓ |
 | Webhook | ✗ | ✓ |
 | Internal reporting | ✗ | ✓ |
@@ -91,7 +91,7 @@ jobs:
 |-------|----------|---------|-------------|
 | `mergeshield-api-key` | ✅ | — | MergeShield API key for plan validation |
 | `github-token` | ✅ | — | GitHub token to access the API |
-| `llm-provider` | ❌ | `"openai"` | LLM provider: `openai`, `claude`, `azure` |
+| `llm-provider` | ❌ | `"openai"` | LLM provider: `openai` (Starter + Premium), `claude`, `azure`, `gemini` (Premium only) |
 | `llm-api-key` | ❌ | `""` | API key for the selected LLM provider |
 | `llm-model` | ❌ | `""` | Model to use (defaults to provider default) |
 | `enable-llm` | ❌ | `"false"` | Enable contextual LLM analysis |
@@ -165,6 +165,7 @@ If LLM is disabled or fails, only the heuristic score is used.
 | OpenAI | `openai` | `gpt-4o-mini` | Starter + Premium |
 | Anthropic | `claude` | `claude-3-5-sonnet-20241022` | Premium |
 | Azure OpenAI | `azure` | `gpt-4o-mini` | Premium |
+| Google Gemini | `gemini` | `gemini-1.5-flash` | Premium |
 
 See [LLM_PROVIDERS.md](LLM_PROVIDERS.md) for detailed configuration.
 
